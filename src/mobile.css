@@ -1,0 +1,120 @@
+/* ═══ MÓVIL · menú, dedos y legibilidad ═══════════════════════ */
+
+/* Cabecera: carrito + menú */
+.header__tools { display: flex; align-items: center; gap: 10px; }
+.menubtn { display: none; }
+.header.on-dark .menubtn { background: rgba(255, 255, 255, .14); color: #fff; backdrop-filter: blur(8px); }
+
+/* Menú completo (cajón lateral) */
+.drawer { position: fixed; inset: 0; z-index: 200; visibility: hidden; transition: visibility 0s .5s; }
+.drawer.is-open { visibility: visible; transition-delay: 0s; }
+.drawer__scrim { position: absolute; inset: 0; background: rgba(8, 22, 38, .55); backdrop-filter: blur(4px); opacity: 0; transition: opacity .4s var(--ease); }
+.drawer.is-open .drawer__scrim { opacity: 1; }
+.drawer__panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(100%, 420px); background: var(--navy); color: #fff; display: flex; flex-direction: column; padding: 18px 22px calc(22px + env(safe-area-inset-bottom)); transform: translateX(100%); transition: transform .5s var(--ease); overflow-y: auto; overscroll-behavior: contain; }
+.drawer.is-open .drawer__panel { transform: none; }
+.drawer__panel::before { content: ''; position: absolute; width: 420px; height: 420px; right: -180px; top: -160px; border-radius: 50%; background: radial-gradient(circle, rgba(22, 119, 255, .35), transparent 65%); pointer-events: none; }
+.drawer__top { display: flex; align-items: center; justify-content: space-between; min-height: 52px; position: relative; }
+.drawer__x { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .12); transition: background .2s, transform .3s var(--ease); }
+.drawer__x:active { transform: scale(.92); }
+.drawer ul { list-style: none; padding: 0; margin: 14px 0 18px; display: grid; position: relative; }
+.drawer li { opacity: 0; transform: translateX(24px); transition: opacity .45s var(--ease), transform .45s var(--ease); border-bottom: 1px solid rgba(255, 255, 255, .1); }
+.drawer.is-open li { opacity: 1; transform: none; }
+.drawer li a { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 6px 2px; font-family: var(--serif); font-size: 1.45rem; letter-spacing: -.01em; }
+.drawer li a span { font-family: var(--sans); font-size: .7rem; font-weight: 800; letter-spacing: .1em; color: var(--sand); width: 22px; }
+.drawer li a svg { margin-left: auto; opacity: .45; }
+.drawer li a.on { color: var(--sand); } .drawer li a.on svg { opacity: 1; }
+.drawer__foot { margin-top: auto; display: grid; gap: 10px; position: relative; }
+.drawer__foot a { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; border-radius: 99px; background: rgba(255, 255, 255, .1); font-weight: 700; }
+.drawer__foot .drawer__wa { background: #25d366; }
+
+@media (max-width: 960px) {
+  .menubtn { display: grid; }
+  .header .nav { display: none; }
+}
+
+/* Dedos: zonas táctiles ≥ 44 px y textos ≥ 12 px */
+@media (max-width: 640px) {
+  .cartbtn { width: 46px; height: 46px; }
+  .btn--sm { min-height: 44px; padding: 10px 18px; font-size: .86rem; }
+  .btn { min-height: 48px; }
+  .link { min-height: 44px; }
+  .back { min-height: 44px; margin-bottom: 4px; }
+  .toggle { min-height: 44px; }
+  .pickup { min-height: 44px; }
+  .pills button { min-height: 44px; }
+  .seg button { min-height: 44px; }
+  .qty button { width: 40px; height: 40px; }
+  .stepper button { width: 44px; height: 44px; }
+  .cline__price button { width: 44px; height: 44px; display: grid; place-items: center; margin-right: -8px; }
+  .chat__chips button, .chips button { min-height: 40px; }
+  .loc__act .btn { flex: 1 1 auto; }
+  .pcard__recipe { min-height: 60px; }
+  .tabbar button { min-height: 52px; }
+  .tabbar button { font-size: .68rem; }
+
+  /* tipografía mínima legible */
+  .tag, .offerbadge, .stockpill, .pcard__altlbl, .ipost__kind, .cat2__txt .pax, .plancard__prep, .chefrecipe small, .starprod small, .gallery__recipe small, .pcard__recipe small { font-size: .75rem; }
+  .gallery__thumbs span { font-size: .72rem; }
+  .maptown { font-size: .72rem; }
+  .loc small, .hours__note, .meta, .pcard__meta, .eyebrow { font-size: .76rem; }
+  .bubble .meta { font-size: .72rem; }
+  .eyebrow { letter-spacing: .12em; }
+  .hours li { font-size: .9rem; }
+  .pcard p, .loc p, .rcard .meta { font-size: .92rem; }
+
+  /* tarjetas de producto: lectura cómoda a una columna */
+  .pcard__img { aspect-ratio: 4 / 3.2; }
+  .pcard__body { padding: 18px 18px 20px; }
+  .pcard h3 { font-size: 1.6rem; }
+  .pcard__foot { gap: 12px; }
+  .pcard__foot .btn { min-width: 128px; }
+
+  /* barra de filtros pegajosa más compacta y desplazable */
+  .filterbar__in { gap: 8px; }
+  .filterbar .pills { margin: 0 -16px; padding: 0 16px; width: calc(100% + 32px); }
+
+  /* mapa de locales: pines más grandes, nombres siempre visibles al tocar */
+  .pin__dot { width: 38px; height: 38px; }
+  .map { aspect-ratio: 1 / 1.05; }
+  .map__card { left: 10px; right: 10px; bottom: 10px; padding: 14px 16px; }
+
+  /* tarjetas de local: foto arriba, acciones a ancho completo */
+  .loc__act .btn { min-height: 46px; }
+  .loc__body { padding: 18px; }
+
+  /* ficha: compra anclada abajo para que el botón siempre esté a mano */
+  .buybox { position: sticky; bottom: 128px; z-index: 20; box-shadow: 0 -12px 30px -10px rgba(16, 42, 67, .25); }
+
+  /* formularios sin zoom automático en iOS (≥16 px) */
+  input, select, textarea { font-size: 16px !important; }
+
+  /* el aviso de la tienda y la cabecera de página respiran menos */
+  .pagehead h1 { font-size: clamp(2.2rem, 11vw, 3rem); }
+  .pagehead p { font-size: .98rem; }
+  .shopcta h3 { font-size: 1.5rem; }
+  .perks__in { grid-template-columns: 1fr 1fr; }
+  .section__head h2 { font-size: 2rem; }
+}
+
+/* Pantallas muy estrechas (≤ 360 px) */
+@media (max-width: 360px) {
+  .wrap { width: calc(100% - 24px); }
+  .hero2 h1, .g-hero h1 { font-size: 2.35rem; }
+  .logo b { font-size: 1.1rem; } .logo small { display: none; }
+  .tabbar button { font-size: .62rem; }
+  .countdown i { min-width: 42px; }
+}
+
+/* Teléfono apaisado o muy bajo: el menú se puede desplazar */
+@media (max-height: 560px) { .drawer li a { min-height: 46px; font-size: 1.2rem; } }
+
+@media (max-width: 640px) {
+  .cook-feature__ing li { padding: 0; } .cook-feature__ing li:not(.linked) { padding: 11px 14px; }
+  .cook-feature__ing li.linked a { display: block; padding: 11px 14px; }
+  .wa__cta .link { min-height: 44px; }
+  .chefhello small { font-size: .75rem; }
+}
+
+/* El mapa debe seguir siendo el contenedor de sus pines y de su dibujo */
+@media (max-width: 960px) { .map { position: relative; top: auto; } }
+.map__card { z-index: 8; }
